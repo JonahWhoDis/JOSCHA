@@ -8,6 +8,7 @@ import 'my_crate.dart';
 class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   final double gravity = 0;
   final double jumpForce = 150;
+  final double pushForce = 55;
   //Skater skater = Skater();
   bool initialFall = false;
   Timer interval = Timer(0.6, repeat: true);
@@ -28,8 +29,8 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   onTapDown(TapDownInfo info) {
     super.onTapDown(info);
     if (info.eventPosition.game.y < 100) {
-      if (crate.velocity == Vector2(0, 0)) {
-        crate.velocity = (jumpForce) as Vector2;
+      if (crate.velocity.y == 0) {
+        crate.velocity.y = -jumpForce;
         crate.isJumping = true;
         print('jump');
       }
@@ -37,17 +38,15 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     // tap on left side of screen to move left
     if (info.eventPosition.game.x < 100) {
       if (crate.velocity.x > 0) {
-        crate.velocity = Vector2(0, crate.velocity.y);
+        crate.velocity.x = -pushForce;
       }
-      crate.velocity = Vector2(-crate.velocity.x, crate.velocity.y);
       print('left');
     }
     // tap on right side of screen to move right
     if (info.eventPosition.game.x > size[0] - 100) {
       if (crate.velocity.x < 0) {
-        crate.velocity = Vector2(0, crate.velocity.y);
+        crate.velocity.x = crate.velocity.x + pushForce;
       }
-      crate.velocity = Vector2(-crate.velocity.x, crate.velocity.y);
       print('right');
     }
   }
