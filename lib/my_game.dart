@@ -22,7 +22,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     final screenHeight = size[1];
     tileSize = screenWidth / 10;
     crate.size = Vector2(tileSize * 10, tileSize * 10);
-    add(MyCrate());
+    add(crate);
   }
 
   @override
@@ -37,15 +37,17 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
     // tap on left side of screen to move left
     if (info.eventPosition.game.x < 100) {
-      if (crate.velocity.x > 0) {
+      if (crate.velocity.x >= 0) {
         crate.velocity.x = -pushForce;
+        print("velocity x: ${crate.velocity.x}");
       }
       print('left');
     }
     // tap on right side of screen to move right
     if (info.eventPosition.game.x > size[0] - 100) {
-      if (crate.velocity.x < 0) {
+      if (crate.velocity.x <= 0) {
         crate.velocity.x = crate.velocity.x + pushForce;
+        print("velocity x: ${crate.velocity.x}");
       }
       print('right');
     }

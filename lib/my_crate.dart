@@ -12,12 +12,11 @@ class MyCrate extends SpriteAnimationComponent
   Future<void> onLoad() async {
     final sprite = await Sprite.load('crate.png');
     final size = Vector2.all(300.0);
-    final player = SpriteComponent(size: size, sprite: sprite);
-    // screen coordinates
-    player.position = Vector2(0.0,
-        0.0); // Vector2(0.0, 0.0) by default, can also be set in the constructor
-    player.angle = 0; // 0 by default, can also be set in the constructor
-    add(player); // Adds the component
+    final crate =
+        SpriteComponent(size: size, sprite: sprite); // screen coordinates
+    crate.position = Vector2(0.0, 0.0);
+    crate.angle = 0;
+    add(crate);
   }
 
   @override
@@ -29,18 +28,18 @@ class MyCrate extends SpriteAnimationComponent
     y += velocity.y * dt;
     // move to right if not at the right edge
     if (x > 0 && velocity.x <= 0) {
-      x += velocity.x * dt;
+      x += velocity.x * 1;
     }
     // move to left if not at the left edge
     if (x < gameRef.size.x - width && velocity.x >= 0) {
-      x += velocity.x * dt;
+      x += velocity.x * 1;
     }
   }
 
   @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
-    position = gameSize / 2;
-    size = gameSize / 10;
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    position = size / 2;
+    size = size / 10;
   }
 }

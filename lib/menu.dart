@@ -1,6 +1,8 @@
+import 'package:first_flame/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends ConsumerWidget {
   const Menu({Key? key}) : super(key: key);
 
   void _onPressed(BuildContext context) {
@@ -8,11 +10,10 @@ class Menu extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // Play Button then navigate to myGame
+  Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () => _onPressed(context),
-      child: const Text("Play"),
+      child: const Text('Start'),
     );
   }
 }
