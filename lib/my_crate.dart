@@ -1,4 +1,4 @@
-import 'package:first_flame/my_game.dart';
+/*import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -39,7 +39,8 @@ class MyCrate extends SpriteAnimationComponent
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    position = size / 2;
+    positionOffset = size / 2;
     size = size / 10;
   }
 }
+*/
