@@ -19,7 +19,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   Player player = Player();
   late SharedPreferences storage;
   int score = 0;
-  List<Enemy> enemies = [];
+  late List<Enemy> enemies;
   HealthBar healthBar = HealthBar();
   EnemySpawner enemySpawner = EnemySpawner();
   ScoreText scoreText = ScoreText();
@@ -27,19 +27,20 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   HighscoreText highscoreText = HighscoreText();
   StartText startText = StartText();
   Random rand = Random();
+  double xEnemy = 0.0;
+  double yEnemy = 0.0;
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    //final SharedPreferences prefs = await SharedPreferences.getInstance();
-    rand = Random();
-    score = 0;
+    storage = await SharedPreferences.getInstance();
     tileSize = size.x / 10;
     add(player);
+    enemies = [];
+    add(enemySpawner);
     add(healthBar);
     add(scoreText);
     add(highscoreText);
     add(startText);
-    add(enemySpawner);
   }
 
   @override
@@ -47,7 +48,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     super.render(canvas);
     Rect background = Rect.fromLTWH(0, 0, size[0], size[1]);
     Paint backgroundPaint = Paint()
-      ..color = const Color.fromARGB(255, 186, 31, 31);
+      ..color = const Color.fromARGB(255, 254, 114, 114);
     canvas.drawRect(background, backgroundPaint);
 
     player.render(canvas);
@@ -66,7 +67,6 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
 
   @override
   void update(double dt) {
-    super.update(dt);
     if (state == State.menu) {
       startText.update(dt);
       highscoreText.update(dt);
@@ -125,6 +125,8 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
         y = rand.nextDouble() * size[1];
         break;
     }
-    enemies.add(Enemy(x, y));
+    xEnemy = x;
+    yEnemy = y;
+    enemies.add(Enemy());
   }
 }

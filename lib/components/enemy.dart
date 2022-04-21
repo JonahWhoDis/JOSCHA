@@ -6,22 +6,21 @@ import 'package:flame/components.dart';
 
 class Enemy extends SpriteComponent
     with CollisionCallbacks, HasGameRef<MyGame> {
-  late int health;
-  late int damage;
-  late double speed;
-  late Rect enemySprite;
+  int health = 3;
+  int damage = 1;
   bool isDead = false;
+  double speed = 0.0;
+  late Rect enemySprite;
 
-  Enemy(double x, double y);
   @override
   Future<void> onLoad() async {
     super.onLoad();
     health = 3;
     damage = 1;
-    speed = gameRef.tileSize * 2;
+    speed = gameRef.tileSize * 0.1;
     enemySprite = Rect.fromLTWH(
-      x,
-      y,
+      gameRef.xEnemy,
+      gameRef.yEnemy,
       gameRef.tileSize * 1.2, //fix constant value replace with tilesize
       gameRef.tileSize * 1.2,
     );
