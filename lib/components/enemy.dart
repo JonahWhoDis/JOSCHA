@@ -11,8 +11,11 @@ class Enemy extends SpriteComponent with CollisionCallbacks {
   bool isDead = false;
   double speed = 2;
   Rect enemySprite;
+  late Sprite taskSprite;
 
-  Enemy(this.gameRef, this.enemySprite);
+  Enemy(this.gameRef, this.enemySprite, Image img) {
+    taskSprite = Sprite(img);
+  }
 
   @override
   Future<void> onLoad() async {
@@ -29,18 +32,22 @@ class Enemy extends SpriteComponent with CollisionCallbacks {
     // switch over health
     switch (health) {
       case 3:
-        color = const Color(0xFFFF4500);
+        color = const Color(0x00212121);
         break;
       case 2:
-        color = const Color(0xFFFF4C4C);
+        color = const Color(0x44212121);
         break;
       case 1:
-        color = const Color(0xFFFF7F7F);
+        color = const Color(0x88212121);
         break;
       default:
-        color = const Color(0xFFFFFFFF);
+        color = const Color(0xBB212121);
     }
     Paint enemyColor = Paint()..color = color;
+
+    Vector2 pos = Vector2(enemySprite.topLeft.dx, enemySprite.topLeft.dy);
+    Vector2 dim = Vector2(enemySprite.width, enemySprite.height);
+    taskSprite.render(canvas, position: pos, size: dim);
     canvas.drawRect(enemySprite, enemyColor);
   }
 

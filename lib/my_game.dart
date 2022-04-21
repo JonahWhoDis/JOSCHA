@@ -30,6 +30,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   State state = State.menu;
   late HighscoreText highscoreText;
   late StartText startText;
+  List<String> tasks = List.empty(growable: true);
   Random rand = Random();
   double xEnemy = 0.0;
   double yEnemy = 0.0;
@@ -38,17 +39,20 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     await super.onLoad();
     FlameAudio.bgm.initialize();
     FlameAudio.bgm.play('music/menu.mp3');
+    await loadSprites();
+
     state = State.menu;
     var loop;
     tileSize = size.x / 10;
     enemySpawner = EnemySpawner(this);
-    player = Player(this);
+    player = Player(this, images.fromCache("joscha1.png"));
     healthBar = HealthBar(this);
     scoreText = ScoreText(this);
     discription = Discription(this);
     highscoreText = HighscoreText(this);
     startText = StartText(this);
     storage = await SharedPreferences.getInstance();
+
     add(player);
     enemies = [];
     add(enemySpawner);
@@ -58,6 +62,22 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     add(highscoreText);
     add(startText);
     spawnEnemy();
+  }
+
+  Future<void> loadSprites() async {
+    tasks.add("tasks/car-wash.png");
+    tasks.add("tasks/cooking.png");
+    tasks.add("tasks/dishwasher.png");
+    tasks.add("tasks/iron.png");
+    tasks.add("tasks/magic-broom.png");
+    tasks.add("tasks/trash-can.png");
+    tasks.add("tasks/tyre.png");
+    tasks.add("tasks/washing-machine.png");
+    tasks.add("tasks/workplace.png");
+    for (String s in tasks) {
+      await images.load(s);
+    }
+    await images.load("joscha1.png");
   }
 
   @override
@@ -190,10 +210,12 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     Rect enemySprite = Rect.fromLTWH(
       xEnemy,
       yEnemy,
-      tileSize * 1.2, //fix constant value replace with tilesize
-      tileSize * 1.2,
+      tileSize * 0.8, //fix constant value replace with tilesize
+      tileSize * 0.8,
     );
+
     numEnemies++;
-    enemies.add(Enemy(this, enemySprite));
+    enemies.add(Enemy(this, enemySprite,
+        images.fromCache(tasks[rand.nextInt(tasks.length)])));
   }
 }
