@@ -10,10 +10,13 @@ class Player extends SpriteComponent with CollisionCallbacks {
   late int maxHealth;
   late int currentHealth;
   late Rect playerRect;
+  late Sprite playerSprite;
   late bool isDead = false;
   late FlameAudio player;
 
-  Player(this.gameRef);
+  Player(this.gameRef, Image img) {
+    playerSprite = Sprite(img);
+  }
 
   @override
   Future<void> onLoad() async {
@@ -31,8 +34,11 @@ class Player extends SpriteComponent with CollisionCallbacks {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    Paint color = Paint()..color = const Color.fromARGB(255, 116, 116, 240);
-    canvas.drawRect(playerRect, color);
+    Paint color = Paint()..color = Color.fromARGB(255, 116, 116, 240);
+    //canvas.drawRect(playerRect, color);
+    Vector2 pos = Vector2(playerRect.topLeft.dx, playerRect.topLeft.dy);
+    Vector2 dim = Vector2(playerRect.width, playerRect.height);
+    playerSprite.render(canvas, position: pos, size: dim);
   }
 
   void resize(Canvas canvas) {
