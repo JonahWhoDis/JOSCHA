@@ -31,7 +31,7 @@ class Player extends SpriteComponent with CollisionCallbacks {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    Paint color = Paint()..color = Color.fromARGB(255, 116, 116, 240);
+    Paint color = Paint()..color = const Color.fromARGB(255, 116, 116, 240);
     canvas.drawRect(playerRect, color);
   }
 
@@ -50,6 +50,7 @@ class Player extends SpriteComponent with CollisionCallbacks {
     super.update(dt);
     if (!isDead && currentHealth <= 0) {
       isDead = true;
+      gameRef.playDeathSound();
       FlameAudio.bgm.stop();
       gameRef.onLoad();
     }
