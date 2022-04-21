@@ -207,15 +207,19 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
     xEnemy = x;
     yEnemy = y;
+    double sizemod = 0.25 + 0.5 * rand.nextDouble();
     Rect enemySprite = Rect.fromLTWH(
       xEnemy,
       yEnemy,
-      tileSize * 0.8, //fix constant value replace with tilesize
-      tileSize * 0.8,
+      tileSize * sizemod, //fix constant value replace with tilesize
+      tileSize * sizemod,
     );
 
     numEnemies++;
-    enemies.add(Enemy(this, enemySprite,
-        images.fromCache(tasks[rand.nextInt(tasks.length)])));
+    enemies.add(Enemy(
+        this,
+        enemySprite,
+        images.fromCache(tasks[rand.nextInt(tasks.length)]),
+        5.0 + score / 7.123));
   }
 }

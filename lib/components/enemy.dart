@@ -13,7 +13,7 @@ class Enemy extends SpriteComponent with CollisionCallbacks {
   Rect enemySprite;
   late Sprite taskSprite;
 
-  Enemy(this.gameRef, this.enemySprite, Image img) {
+  Enemy(this.gameRef, this.enemySprite, Image img, this.speed) {
     taskSprite = Sprite(img);
   }
 
