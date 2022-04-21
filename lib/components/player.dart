@@ -56,6 +56,7 @@ class Player extends SpriteComponent with CollisionCallbacks {
     super.update(dt);
     if (!isDead && currentHealth <= 0) {
       isDead = true;
+      gameRef.playDeathSound();
       FlameAudio.bgm.stop();
       gameRef.onLoad();
     }
