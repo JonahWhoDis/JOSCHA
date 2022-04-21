@@ -31,6 +31,9 @@ class EnemySpawner extends SpriteComponent with CollisionCallbacks {
     super.update(dt);
     int now = DateTime.now().millisecondsSinceEpoch;
     if (gameRef.enemies.length < maxEnemies && now >= nextSpawn) {
+      if (gameRef.numEnemies % 7 == 0) {
+        gameRef.playSpawnSound();
+      }
       gameRef.spawnEnemy();
       if (currentInterval > minSpawnInterval) {
         currentInterval -= intervalChange;

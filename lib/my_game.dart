@@ -18,6 +18,7 @@ import 'components/player.dart';
 
 class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   double tileSize = 0;
+  int numEnemies = 0;
   late Player player;
   late SharedPreferences storage;
   int score = 0;
@@ -38,6 +39,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     FlameAudio.bgm.initialize();
     FlameAudio.bgm.play('music/menu.mp3');
     state = State.menu;
+    var loop;
     tileSize = size.x / 10;
     enemySpawner = EnemySpawner(this);
     player = Player(this);
@@ -108,12 +110,33 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (state == State.menu) {
       FlameAudio.bgm.stop();
       state = State.playing;
+      FlameAudio.bgm.play('music/Joscha.mp3');
     } else if (state == State.playing) {
       for (var enemy in enemies) {
         if (enemy.enemySprite.contains(info.raw.globalPosition)) {
           enemy.onTapDown();
         }
       }
+    }
+  }
+
+  void playDamageSound() {
+    switch (rand.nextInt(5)) {
+      case 0:
+        FlameAudio.play('music/damage1.mp3');
+        break;
+      case 1:
+        FlameAudio.play('music/damage2.mp3');
+        break;
+      case 2:
+        FlameAudio.play('music/damage3.mp3');
+        break;
+      case 3:
+        FlameAudio.play('music/damage4.mp3');
+        break;
+      case 4:
+        FlameAudio.play('music/damage5.mp3');
+        break;
     }
   }
 
@@ -170,7 +193,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
       tileSize * 1.2, //fix constant value replace with tilesize
       tileSize * 1.2,
     );
-    playSpawnSound();
+    numEnemies++;
     enemies.add(Enemy(this, enemySprite));
   }
 }
