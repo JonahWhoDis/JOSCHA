@@ -4,11 +4,12 @@ import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-class HealthBar extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<MyGame> {
+class HealthBar extends SpriteComponent with CollisionCallbacks {
+  final MyGame gameRef;
   late Rect healthBarRect;
   late Rect remainingHealthRect;
 
+  HealthBar(this.gameRef);
   // add onLoad method
   @override
   Future<void> onLoad() async {
@@ -18,13 +19,13 @@ class HealthBar extends SpriteComponent
       gameRef.size[0] / 2 - barWidth / 2,
       gameRef.size[1] * 0.8,
       barWidth,
-      gameRef.tileSize * 0.5,
+      gameRef.tileSize * 0.2,
     );
     remainingHealthRect = Rect.fromLTWH(
       gameRef.size[0] / 2 - barWidth / 2,
       gameRef.size[1] * 0.8,
       barWidth,
-      gameRef.tileSize * 0.5,
+      gameRef.tileSize * 0.2,
     );
   }
 
@@ -46,8 +47,9 @@ class HealthBar extends SpriteComponent
     remainingHealthRect = Rect.fromLTWH(
       gameRef.size[0] / 2 - barWidth / 2,
       gameRef.size[1] * 0.8,
-      barWidth * percentHealth,
-      gameRef.tileSize * 0.5,
+      barWidth *
+          percentHealth, // percent health deactivated for debugging pupposess
+      gameRef.tileSize * 0.2,
     );
   }
 }

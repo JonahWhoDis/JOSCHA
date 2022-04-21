@@ -4,12 +4,15 @@ import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-class Player extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<MyGame> {
+class Player extends SpriteComponent with CollisionCallbacks {
+  final MyGame gameRef;
   late int maxHealth;
   late int currentHealth;
   late Rect playerRect;
   late bool isDead = false;
+
+  Player(this.gameRef);
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
@@ -41,8 +44,8 @@ class Player extends SpriteComponent
   }
 
   @override
-  void update(double t) {
-    super.update(t);
+  void update(double dt) {
+    super.update(dt);
     if (!isDead && currentHealth <= 0) {
       isDead = true;
       gameRef.onLoad();

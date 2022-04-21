@@ -2,14 +2,16 @@ import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-class EnemySpawner extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<MyGame> {
+class EnemySpawner extends SpriteComponent with CollisionCallbacks {
+  final MyGame gameRef;
   late final int maxSpawnInterval = 3000;
   late final int minSpawnInterval = 700;
   late final int intervalChange = 3;
   late final int maxEnemies = 7;
   late int currentInterval;
   late int nextSpawn;
+
+  EnemySpawner(this.gameRef);
 
   @override
   onLoad() async {

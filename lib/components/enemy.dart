@@ -4,26 +4,22 @@ import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-class Enemy extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<MyGame> {
+class Enemy extends SpriteComponent with CollisionCallbacks {
+  final MyGame gameRef;
   int health = 3;
   int damage = 1;
   bool isDead = false;
-  double speed = 0.0;
-  late Rect enemySprite;
+  double speed = 2;
+  Rect enemySprite;
+
+  Enemy(this.gameRef, this.enemySprite);
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
     health = 3;
     damage = 1;
-    speed = gameRef.tileSize * 0.1;
-    enemySprite = Rect.fromLTWH(
-      gameRef.xEnemy,
-      gameRef.yEnemy,
-      gameRef.tileSize * 1.2, //fix constant value replace with tilesize
-      gameRef.tileSize * 1.2,
-    );
+    speed = gameRef.tileSize * 2;
   }
 
   @override
@@ -58,14 +54,13 @@ class Enemy extends SpriteComponent
   void update(double dt) {
     super.update(dt);
     if (isDead) {
-      // remove enemy from game
-      gameRef.remove(this);
+      gameRef.enemies.remove(this);
     } else {
-      double stepDistence = speed * dt;
+      double stepDistance = speed * (dt * 10);
       Offset toPlayer = gameRef.player.playerRect.center - enemySprite.center;
-      if (toPlayer.distance < stepDistence - gameRef.tileSize * 1.25) {
+      if ((toPlayer.distance).abs() > gameRef.tileSize * 1.25) {
         Offset stepToPlayer =
-            Offset.fromDirection(toPlayer.direction, stepDistence);
+            Offset.fromDirection(toPlayer.direction, stepDistance);
         enemySprite = enemySprite.shift(stepToPlayer);
       } else {
         attack();

@@ -3,37 +3,41 @@ import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-class StartText extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<MyGame> {
+class StartText extends SpriteComponent with CollisionCallbacks {
+  final MyGame gameRef;
   late TextPainter painter;
   late Offset positionOffset;
+
+  StartText(this.gameRef);
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
     painter = TextPainter(
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.end,
       textDirection: TextDirection.ltr,
+    );
+    painter.text = const TextSpan(
+      text: 'Start',
+      style: TextStyle(
+        color: Color.fromARGB(255, 146, 146, 146),
+        fontSize: 50.0,
+      ),
     );
     positionOffset = Offset.zero;
   }
 
   @override
-  void render(Canvas c) {
-    super.render(c);
-    painter.paint(c, positionOffset);
+  void render(Canvas canvas) {
+    super.render(canvas);
+    painter.layout();
+    painter.paint(canvas, positionOffset);
   }
 
   @override
-  void update(double t) {
-    super.update(t);
-    painter.text = const TextSpan(
-      text: 'Start',
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 50.0,
-      ),
-    );
+  void update(double dt) {
+    super.update(dt);
+
     painter.layout();
 
     positionOffset = Offset(

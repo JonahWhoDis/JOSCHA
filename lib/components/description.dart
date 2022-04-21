@@ -1,15 +1,15 @@
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flame/my_game.dart';
+import 'package:flame/collisions.dart';
+import 'package:flame/components.dart';
 
-class HighscoreText extends SpriteComponent with CollisionCallbacks {
+class Discription extends SpriteComponent with CollisionCallbacks {
   final MyGame gameRef;
   late TextPainter painter;
   late Offset positionOffset;
-  int highscore = 0;
 
-  HighscoreText(this.gameRef);
+  Discription(this.gameRef);
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
@@ -17,12 +17,12 @@ class HighscoreText extends SpriteComponent with CollisionCallbacks {
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
-
-    painter.text = TextSpan(
-      text: 'Highscore: $highscore',
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 40.0,
+    painter.text = const TextSpan(
+      text:
+          'Joscha, mit diesem Spiel sollst du lernen \n deine Haushaltaufgaben zu erledigen.',
+      style: TextStyle(
+        color: Color.fromARGB(255, 146, 146, 146),
+        fontSize: 30.0,
       ),
     );
     positionOffset = Offset.zero;
@@ -37,19 +37,13 @@ class HighscoreText extends SpriteComponent with CollisionCallbacks {
 
   @override
   void update(double dt) {
-    int highscore = gameRef.storage.getInt('highscore') ?? 0;
-    painter.text = TextSpan(
-      text: 'Highscore: $highscore',
-      style: const TextStyle(
-        color: Color.fromARGB(255, 146, 146, 146),
-        fontSize: 40.0,
-      ),
-    );
+    super.update(dt);
+
     painter.layout();
 
     positionOffset = Offset(
       (gameRef.size[0] / 2) - (painter.width / 2),
-      (gameRef.size[1] * 0.2) - (painter.height / 2),
+      (gameRef.size[1] * 0.3) - (painter.height / 2),
     );
   }
 }
