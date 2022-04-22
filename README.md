@@ -7,3 +7,4 @@ Context:
 No matter how old you are, as soon as you are at your parents place, they expect you to lend a hand. 
 My brother doesn't do that. Its a fun game to teach him to do his chores. 
 
+You can either build it or try out the webversion following this link: www.joschag.com
