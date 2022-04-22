@@ -84,7 +84,8 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   void render(Canvas canvas) {
     super.render(canvas);
     Rect background = Rect.fromLTWH(0, 0, size[0], size[1]);
-    Paint backgroundPaint = Paint()..color = Color.fromARGB(255, 21, 21, 21);
+    Paint backgroundPaint = Paint()
+      ..color = const Color.fromARGB(255, 21, 21, 21);
     canvas.drawRect(background, backgroundPaint);
 
     player.render(canvas);

@@ -39,8 +39,8 @@ class HealthBar extends SpriteComponent with CollisionCallbacks {
   }
 
   @override
-  void update(double t) {
-    super.update(t);
+  void update(double dt) {
+    super.update(dt);
     double barWidth = gameRef.size[0] / 1.75;
     double percentHealth =
         gameRef.player.currentHealth / gameRef.player.maxHealth;

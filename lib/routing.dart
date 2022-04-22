@@ -1,4 +1,3 @@
-import 'package:first_flame/my_game.dart';
 import 'package:flutter/material.dart';
 
 import 'splash.dart';

@@ -34,7 +34,6 @@ class Player extends SpriteComponent with CollisionCallbacks {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    Paint color = Paint()..color = Color.fromARGB(255, 116, 116, 240);
     //canvas.drawRect(playerRect, color);
     Vector2 pos = Vector2(playerRect.topLeft.dx, playerRect.topLeft.dy);
     Vector2 dim = Vector2(playerRect.width, playerRect.height);

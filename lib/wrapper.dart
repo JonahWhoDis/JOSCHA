@@ -1,9 +1,5 @@
-import 'package:first_flame/my_game.dart';
-import 'package:first_flame/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
-import 'routing.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
