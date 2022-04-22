@@ -44,11 +44,13 @@ class HealthBar extends SpriteComponent with CollisionCallbacks {
     double barWidth = gameRef.size[0] / 1.75;
     double percentHealth =
         gameRef.player.currentHealth / gameRef.player.maxHealth;
+    if (gameRef.player.currentHealth <= 0) {
+      percentHealth = 0;
+    }
     remainingHealthRect = Rect.fromLTWH(
       gameRef.size[0] / 2 - barWidth / 2,
       gameRef.size[1] * 0.8,
-      barWidth *
-          percentHealth, // percent health deactivated for debugging pupposess
+      barWidth * percentHealth,
       gameRef.tileSize * 0.2,
     );
   }

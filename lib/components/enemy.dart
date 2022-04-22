@@ -54,7 +54,10 @@ class Enemy extends SpriteComponent with CollisionCallbacks {
   void attack() {
     if (!gameRef.player.isDead) {
       gameRef.player.currentHealth -= damage;
-      if (gameRef.player.currentHealth == gameRef.player.maxHealth/2) {
+      if (gameRef.player.currentHealth == gameRef.player.maxHealth / 2 ||
+          gameRef.player.currentHealth == gameRef.player.maxHealth / 4 ||
+          gameRef.player.currentHealth ==
+              (gameRef.player.maxHealth / 4 + gameRef.player.maxHealth / 2)) {
         gameRef.playDamageSound();
       }
     }

@@ -21,7 +21,7 @@ class Player extends SpriteComponent with CollisionCallbacks {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    maxHealth = currentHealth = 300;
+    maxHealth = currentHealth = 500;
     final size = gameRef.tileSize * 1.5;
     playerRect = Rect.fromLTWH(
       gameRef.size[0] / 2 - size / 2,
@@ -54,7 +54,6 @@ class Player extends SpriteComponent with CollisionCallbacks {
   void update(double dt) {
     super.update(dt);
     if (!isDead && currentHealth <= 0) {
-      isDead = true;
       gameRef.playDeathSound();
       FlameAudio.bgm.stop();
       gameRef.onLoad();

@@ -16,6 +16,7 @@ dependencies:
   flame_audio: ^1.0.2
   responsive_framework: ^0.1.7
   shared_preferences: ^2.0.13
+  flutter_launcher_icons: ^0.9.2
 
 dev_dependencies:
   flutter_test:
@@ -23,6 +24,11 @@ dev_dependencies:
 
   flutter_lints: ^1.0.0
 
+flutter_icons:
+  image_path: 'assets/images/icon.png'
+  android: true
+  ios: true
+  
 flutter:
   uses-material-design: true
   assets:
@@ -30,7 +36,7 @@ flutter:
     - assets/images/tasks/
     - assets/audio/music/
     - assets/audio/sfx/
-    
+
 
   # fonts:
   #   - family: Schyler

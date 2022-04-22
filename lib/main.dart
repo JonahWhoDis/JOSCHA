@@ -8,7 +8,7 @@ final healthPoints = StateProvider((_) => 100);
 final score = StateProvider((_) => 0);
 final gameOver = StateProvider((_) => false);
 final inGame = StateProvider((_) => false);
-main() async {
+main() {
   runApp(
     GameWidget(
       game: MyGame(),

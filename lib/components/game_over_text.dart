@@ -3,12 +3,12 @@ import 'package:first_flame/my_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-class Discription extends SpriteComponent with CollisionCallbacks {
+class GameOverText extends SpriteComponent with CollisionCallbacks {
   final MyGame gameRef;
   late TextPainter painter;
   late Offset positionOffset;
 
-  Discription(this.gameRef);
+  GameOverText(this.gameRef);
 
   @override
   Future<void> onLoad() async {
@@ -18,11 +18,10 @@ class Discription extends SpriteComponent with CollisionCallbacks {
       textDirection: TextDirection.ltr,
     );
     painter.text = const TextSpan(
-      text:
-          'Joscha, mit diesem Spiel sollst du lernen \n deine Haushaltaufgaben zu erledigen.\nKlicke 3x auf eine Aufgabe um sie zu erledigen',
+      text: 'GAME OVER',
       style: TextStyle(
-        color: Color.fromARGB(255, 146, 146, 146),
-        fontSize: 25.0,
+        color: Color.fromARGB(255, 227, 66, 66),
+        fontSize: 50.0,
       ),
     );
     positionOffset = Offset.zero;
