@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 class ScoreText extends SpriteComponent with CollisionCallbacks {
-  final MyGame gameRef;
+  final JoschaGame gameRef;
   late TextPainter painter;
   late Offset positionOffset;
 

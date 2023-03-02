@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 class StartText extends SpriteComponent with CollisionCallbacks {
-  final MyGame gameRef;
+  final JoschaGame gameRef;
   late TextPainter painter;
   late Offset positionOffset;
 

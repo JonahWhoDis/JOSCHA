@@ -12,7 +12,7 @@ class Menu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () => _onPressed(context),
-      child: const Text('Start'),
+      child: const Text('Test'),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:first_flame/my_game.dart';
 
 class HighscoreText extends SpriteComponent with CollisionCallbacks {
-  final MyGame gameRef;
+  final JoschaGame gameRef;
   late TextPainter painter;
   late Offset positionOffset;
   int highscore = 0;

@@ -5,7 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 class Enemy extends SpriteComponent with CollisionCallbacks {
-  final MyGame gameRef;
+  final JoschaGame gameRef;
   int health = 3;
   int damage = 1;
   bool isDead = false;
@@ -20,8 +20,6 @@ class Enemy extends SpriteComponent with CollisionCallbacks {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    health = 3;
-    damage = 1;
     speed = gameRef.tileSize * 2;
   }
 

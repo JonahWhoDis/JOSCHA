@@ -6,7 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 
 class Player extends SpriteComponent with CollisionCallbacks {
-  final MyGame gameRef;
+  final JoschaGame gameRef;
   late int maxHealth;
   late int currentHealth;
   late Rect playerRect;

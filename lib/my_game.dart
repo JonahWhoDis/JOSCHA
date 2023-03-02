@@ -3,34 +3,39 @@ import 'dart:ui';
 
 import 'package:first_flame/components/description.dart';
 import 'package:first_flame/components/game_over_text.dart';
+import 'package:first_flame/components/pause_menu.dart';
 import 'package:flame/game.dart';
 import 'package:first_flame/components/health_bar.dart';
 import 'package:first_flame/components/highscore_text.dart';
 import 'package:first_flame/components/score_text.dart';
 import 'package:first_flame/components/start_text.dart';
 import 'package:first_flame/enemy_spawner.dart';
-import 'package:first_flame/state.dart';
+import 'package:first_flame/state.dart' as flame;
 import 'package:flame/input.dart';
+import 'package:flame_audio/audio_pool.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/enemy.dart';
 import 'components/player.dart';
 
-class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
+class JoschaGame extends FlameGame with HasCollisionDetection, TapDetector {
   double tileSize = 0;
   int numEnemies = 0;
   int numDamage = 0;
   late Player player;
   late SharedPreferences storage;
+  late AudioPool pool;
   int score = 0;
   late List<Enemy> enemies;
   late HealthBar healthBar;
   late EnemySpawner enemySpawner;
+  late PauseMenu pauseMenu;
   late ScoreText scoreText;
   late Discription discription;
   late GameOverText gameOverText;
-  State state = State.menu;
+  flame.State state = flame.State.menu;
   late HighscoreText highscoreText;
   late StartText startText;
   List<String> tasks = List.empty(growable: true);
@@ -40,12 +45,12 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    score = 0;
     FlameAudio.bgm.initialize();
     FlameAudio.audioCache.clearAll();
-    await loadBgmAudioFiles();
     await loadAudioFiles();
     await loadSprites();
-    state = State.menu;
+    state = flame.State.menu;
     FlameAudio.bgm.play('music/menu.mp3', volume: .75);
     tileSize = size.x / 10;
     enemySpawner = EnemySpawner(this);
@@ -57,6 +62,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     startText = StartText(this);
     gameOverText = GameOverText(this);
     storage = await SharedPreferences.getInstance();
+    pauseMenu = PauseMenu(this);
 
     add(player);
     enemies = [];
@@ -67,14 +73,8 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     add(highscoreText);
     add(startText);
     add(gameOverText);
+    add(pauseMenu);
     spawnEnemy();
-  }
-
-  Future<void> loadBgmAudioFiles() async {
-    FlameAudio.bgm.loadAll([
-      'music/menu.mp3',
-      'music/Joscha.mp3',
-    ]);
   }
 
   Future<void> loadAudioFiles() async {
@@ -128,26 +128,29 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     player.render(canvas);
 
-    if (state == State.menu) {
+    if (state == flame.State.menu) {
       startText.render(canvas);
       highscoreText.render(canvas);
       discription.render(canvas);
-    } else if (state == State.playing) {
+    } else if (state == flame.State.playing) {
       for (var enemy in enemies) {
         enemy.render(canvas);
       }
+      pauseMenu.render(canvas);
       scoreText.render(canvas);
       healthBar.render(canvas);
     }
   }
 
+  // ignore: must_call_super
   @override
   void update(double dt) {
-    if (state == State.menu) {
+    //super.update(dt);
+    if (state == flame.State.menu) {
       startText.update(dt);
       highscoreText.update(dt);
       discription.update(dt);
-    } else if (state == State.playing) {
+    } else if (state == flame.State.playing) {
       enemySpawner.update(dt);
       for (int i = 0; i < enemies.length; i++) {
         enemies[i].update(dt);
@@ -166,11 +169,11 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
 
   @override
   void onTapDown(TapDownInfo info) {
-    if (state == State.menu) {
-      state = State.playing;
+    if (state == flame.State.menu) {
+      state = flame.State.playing;
       FlameAudio.bgm.stop();
       FlameAudio.bgm.play('music/Joscha.mp3', volume: 0.75);
-    } else if (state == State.playing) {
+    } else if (state == flame.State.playing) {
       for (var enemy in enemies) {
         if (enemy.enemySprite.contains(info.raw.globalPosition)) {
           enemy.onTapDown();
@@ -180,26 +183,16 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   void playDeathSound() {
-    switch (rand.nextInt(6)) {
-      case 0:
-        FlameAudio.play('sfx/death1.mp3');
-        break;
-      case 1:
-        FlameAudio.play('sfx/death2.mp3');
-        break;
-      case 2:
-        FlameAudio.play('sfx/death3.mp3');
-        break;
-      case 3:
-        FlameAudio.play('sfx/death4.mp3');
-        break;
-      case 4:
-        FlameAudio.play('sfx/death5.mp3');
-        break;
-      case 5:
-        FlameAudio.play('sfx/death6.mp3');
-        break;
-    }
+    final deathSounds = [
+      'sfx/death1.mp3',
+      'sfx/death2.mp3',
+      'sfx/death3.mp3',
+      'sfx/death4.mp3',
+      'sfx/death5.mp3',
+      'sfx/death6.mp3',
+    ];
+    final randomIndex = rand.nextInt(deathSounds.length);
+    FlameAudio.play(deathSounds[randomIndex]);
   }
 
   void playDamageSound() {
