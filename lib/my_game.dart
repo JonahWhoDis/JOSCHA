@@ -196,97 +196,52 @@ class JoschaGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   void playDamageSound() {
-    switch (rand.nextInt(6)) {
-      case 0:
-        FlameAudio.play('sfx/damage1.mp3');
-        break;
-      case 1:
-        FlameAudio.play('sfx/damage2.mp3');
-        break;
-      case 2:
-        FlameAudio.play('sfx/damage3.mp3');
-        break;
-      case 3:
-        FlameAudio.play('sfx/damage4.mp3');
-        break;
-      case 4:
-        FlameAudio.play('sfx/damage5.mp3');
-        break;
-      case 5:
-        FlameAudio.play('sfx/damage6.mp3');
-        break;
-    }
+    final damageSounds = [
+      'sfx/damage1.mp3',
+      'sfx/damage2.mp3',
+      'sfx/damage3.mp3',
+      'sfx/damage4.mp3',
+      'sfx/damage5.mp3',
+      'sfx/damage6.mp3',
+    ];
+    final randomIndex = rand.nextInt(damageSounds.length);
+    FlameAudio.play(damageSounds[randomIndex]);
   }
 
   void playSpawnSound() {
-    switch (rand.nextInt(8)) {
-      case 0:
-        FlameAudio.play('sfx/Spawn.mp3');
-        break;
-      case 1:
-        FlameAudio.play('sfx/Spawn1.mp3');
-        break;
-      case 2:
-        FlameAudio.play('sfx/Spawn2.mp3');
-        break;
-      case 3:
-        FlameAudio.play('sfx/Spawn3.mp3');
-        break;
-      case 4:
-        FlameAudio.play('sfx/Spawn4.mp3');
-        break;
-      case 5:
-        FlameAudio.play('sfx/Spawn5.mp3');
-        break;
-      case 6:
-        FlameAudio.play('sfx/Spawn6.mp3');
-        break;
-      case 7:
-        FlameAudio.play('sfx/Spawn7.mp3');
-        break;
-    }
+    final spawnSounds = [
+      'sfx/Spawn.mp3',
+      'sfx/Spawn1.mp3',
+      'sfx/Spawn2.mp3',
+      'sfx/Spawn3.mp3',
+      'sfx/Spawn4.mp3',
+      'sfx/Spawn5.mp3',
+      'sfx/Spawn6.mp3',
+      'sfx/Spawn7.mp3',
+    ];
+    final randomIndex = rand.nextInt(spawnSounds.length);
+    FlameAudio.play(spawnSounds[randomIndex]);
   }
 
   void spawnEnemy() {
-    double x = 0.0;
-    double y = 0.0;
-    switch (rand.nextInt(4)) {
-      case 0:
-        // Top
-        x = rand.nextDouble() * size[0];
-        y = -tileSize * 2.5;
-        break;
-      case 1:
-        // Right
-        x = size[0] + tileSize * 2.5;
-        y = rand.nextDouble() * size[1];
-        break;
-      case 2:
-        // Bottom
-        x = rand.nextDouble() * size[0];
-        y = size[1] + tileSize * 2.5;
-        break;
-      case 3:
-        // Left
-        x = -tileSize * 2.5;
-        y = rand.nextDouble() * size[1];
-        break;
-    }
-    xEnemy = x;
-    yEnemy = y;
-    double sizemod = 0.25 + 0.5 * rand.nextDouble();
-    Rect enemySprite = Rect.fromLTWH(
-      xEnemy,
-      yEnemy,
-      tileSize * sizemod, //fix constant value replace with tilesize
-      tileSize * sizemod,
-    );
+    const tileSize = 32; // Replace constant value with tileSize
+    final xOffsets = [-tileSize * 2.5, 0, 0, -tileSize * 2.5];
+    final yOffsets = [-tileSize * 2.5, tileSize * 2.5, tileSize * 2.5, 0];
+    final spawnIndex = rand.nextInt(4);
+    final x = rand.nextDouble() * size[0] + xOffsets[spawnIndex];
+    final y = rand.nextDouble() * size[1] + yOffsets[spawnIndex];
+
+    final sizemod = 0.25 + 0.5 * rand.nextDouble();
+    final enemySprite =
+        Rect.fromLTWH(x, y, tileSize * sizemod, tileSize * sizemod);
 
     numEnemies++;
-    enemies.add(Enemy(
-        this,
-        enemySprite,
-        images.fromCache(tasks[rand.nextInt(tasks.length)]),
-        5.0 + score / 7.123));
+    enemies.add(
+      Enemy(
+          this,
+          enemySprite,
+          images.fromCache(tasks[rand.nextInt(tasks.length)]),
+          5.0 + score / 7.123),
+    );
   }
 }
